@@ -1,0 +1,56 @@
+<VirtualHost *:*>
+	ServerName <%= @server_name %>
+	<% @server_aliases.each do |a| -%>
+	ServerAlias <%= a %>
+	<% end -%>
+
+	DocumentRoot "<%= @docroot %>"
+
+	<Directory "<%= @docroot %>">
+		AllowOverride All
+		Options FollowSymLinks
+		Order allow,deny
+		Allow from all
+	</Directory>
+
+	RewriteEngine On
+  RewriteRule /(serendipity_admin.*)$ https://<%= @server_name %>/$1 [R=302,L]
+
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+	
+	ExpiresActive On
+	ExpiresDefault "access plus 5 minutes"
+	ExpiresByType image/jpeg "access plus 1 week"
+	ExpiresByType image/gif "access plus 1 week"
+	ExpiresByType image/png "access plus 1 week"
+	ExpiresByType text/css "access plus 1 week" 
+
+	ErrorLog <%= node[:apache2][:log_dir] %>/<%= @server_name %>_error_log
+	CustomLog <%= node[:apache2][:log_dir] %>/<%= @server_name %>_access_log combined env=!forwarded
+  CustomLog <%= node[:apache2][:log_dir] %>/<%= @server_name %>_access_log proxy env=forwarded
+
+</VirtualHost>
+
+<% if node[:s9y][:redirect_domain] && @domain_name -%>
+<VirtualHost *:80>
+	ServerName <%= @domain_name %>
+
+	DocumentRoot "<%= @docroot %>"
+
+	<Directory "<%= @docroot %>">
+		AllowOverride All
+		Options FollowSymLinks
+		Order allow,deny
+		Allow from all
+	</Directory>
+
+	RewriteEngine On
+  RewriteRule /(serendipity_admin.*)$ https://<%= @server_name %>/$1 [R=302,L]
+  RewriteRule (.*) http://<%= @server_name %>$1 [R=301,L]
+
+	ErrorLog <%= node[:apache2][:log_dir] %>/<%= @server_name %>_error_log
+	CustomLog <%= node[:apache2][:log_dir] %>/<%= @server_name %>_access_log combined env=!forwarded
+  CustomLog <%= node[:apache2][:log_dir] %>/<%= @server_name %>_access_log proxy env=forwarded
+
+</VirtualHost>
+<% end %>
