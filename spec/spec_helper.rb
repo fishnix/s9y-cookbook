@@ -1,5 +1,5 @@
+require 'rspec/expectations'
 require 'chefspec'
-# require 'chefspec/berkshelf'
-# require 'rspec/expectations'
+require 'chefspec/berkshelf'
 
 at_exit { ChefSpec::Coverage.report! }
