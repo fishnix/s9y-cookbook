@@ -99,7 +99,7 @@ Include `s9y` in your node's `run_list` to get:
  
 #### s9y::prep
 
-Install's package dependencies and preps the filesystem for s9y.
+Installs package dependencies and preps the filesystem for s9y.
 
 #### s9y::framework
 

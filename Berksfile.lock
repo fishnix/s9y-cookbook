@@ -1,0 +1,71 @@
+DEPENDENCIES
+  apache2
+    git: git://github.com/fishnix/apache2-cookbook.git
+    revision: 6fc5b7001778cf1de13ae9967e6f0ab845504ae0
+  database (~> 1.6.0)
+  git (~> 4.0.2)
+  memcached
+    git: git://github.com/fishnix/memcached-cookbook.git
+    revision: 70c7a6a001d60e50f7a6d4684c6121f0014d9a35
+  misc
+    path: ../../chef-repo/cookbooks/misc
+  mysql
+    path: ../../chef-repo/cookbooks/mysql
+  openssl
+    path: ../../chef-repo/cookbooks/openssl
+  php5
+    git: git://github.com/fishnix/php5-cookbook.git
+    revision: 5af283af9f82220f8c2921c6d1bf56253afe3a1b
+  s9y
+    path: .
+    metadata: true
+  yum (~> 3.2.1)
+  yum-epel (~> 0.3.6)
+
+GRAPH
+  apache2 (0.0.3)
+  apt (2.4.0)
+  aws (2.2.2)
+  build-essential (2.0.4)
+  chef_handler (1.1.6)
+  database (1.6.0)
+    aws (>= 0.0.0)
+    mysql (>= 1.3.0)
+    postgresql (>= 1.0.0)
+    xfs (>= 0.0.0)
+  dmg (2.2.0)
+  git (4.0.2)
+    build-essential (>= 0.0.0)
+    dmg (>= 0.0.0)
+    runit (>= 1.0.0)
+    windows (>= 0.0.0)
+    yum (~> 3.0)
+    yum-epel (>= 0.0.0)
+  memcached (0.0.1)
+  misc (0.0.6)
+  mysql (1.3.0)
+    build-essential (>= 0.0.0)
+    openssl (>= 0.0.0)
+  openssl (1.0.0)
+  php5 (0.0.3)
+    apache2 (>= 0.0.0)
+  postgresql (3.4.1)
+    apt (>= 1.9.0)
+    build-essential (>= 0.0.0)
+    openssl (>= 0.0.0)
+  runit (1.5.10)
+    build-essential (>= 0.0.0)
+    yum (~> 3.0)
+    yum-epel (>= 0.0.0)
+  s9y (0.0.1)
+    apache2 (>= 0.0.0)
+    database (>= 0.0.0)
+    git (>= 0.0.0)
+    mysql (>= 0.0.0)
+    php5 (>= 0.0.0)
+  windows (1.31.0)
+    chef_handler (>= 0.0.0)
+  xfs (1.1.0)
+  yum (3.2.2)
+  yum-epel (0.3.6)
+    yum (~> 3.0)

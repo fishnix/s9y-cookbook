@@ -1,0 +1,47 @@
+---
+driver_plugin: vagrant
+driver_config:
+  require_chef_omnibus: true
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-6.5
+    driver_config: 
+      image: "centos-6.5"
+    run_list:
+        - recipe[yum]
+        - recipe[yum-epel]
+
+suites:
+  - name: s9y
+    run_list:
+      - recipe[git]
+      - recipe[openssl::certs]
+      - recipe[misc::mod_ssl]
+      - recipe[misc::scripts]
+      - recipe[apache2]
+      - recipe[apache2::ssl]
+      - recipe[memcached]
+      - recipe[php5]
+      - recipe[mysql::server]
+      - recipe[mysql::client]
+      - recipe[mysql::ruby]
+      - recipe[database]
+      - recipe[s9y::prep]
+      - recipe[s9y::apache2]
+      - recipe[s9y::db]
+      - recipe[s9y::framework]
+      - recipe[s9y::plugins]
+      - recipe[s9y::templates]
+    attributes:
+      s9y:
+        sites:
+          - "test_kitchen_ci"
+        base_dir: "/var/www/vhost"
+      apache2:
+        ssl:
+          SSLCertificateFile: "/etc/pki/tls/certs/mail.fishnix.com.crt"
+          SSLCertificateKeyFile: "/etc/pki/tls/private/mail.fishnix.com.key"
+          SSLCertificateChainFile: "/etc/pki/tls/certs/gd_bundle.crt"
