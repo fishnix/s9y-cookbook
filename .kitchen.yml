@@ -15,14 +15,10 @@ platforms:
         - recipe[yum-epel]
 
 suites:
-  - name: s9y
+  - name: default
     run_list:
       - recipe[git]
-      - recipe[openssl::certs]
-      - recipe[misc::mod_ssl]
-      - recipe[misc::scripts]
       - recipe[apache2]
-      - recipe[apache2::ssl]
       - recipe[memcached]
       - recipe[php5]
       - recipe[mysql::server]
@@ -40,8 +36,4 @@ suites:
         sites:
           - "test_kitchen_ci"
         base_dir: "/var/www/vhost"
-      apache2:
-        ssl:
-          SSLCertificateFile: "/etc/pki/tls/certs/mail.fishnix.com.crt"
-          SSLCertificateKeyFile: "/etc/pki/tls/private/mail.fishnix.com.key"
-          SSLCertificateChainFile: "/etc/pki/tls/certs/gd_bundle.crt"
+
