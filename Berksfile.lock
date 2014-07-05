@@ -54,7 +54,7 @@ GRAPH
     build-essential (>= 0.0.0)
     yum (~> 3.0)
     yum-epel (>= 0.0.0)
-  s9y (0.0.2)
+  s9y (0.0.4)
     apache2 (>= 0.0.0)
     database (>= 0.0.0)
     git (>= 0.0.0)

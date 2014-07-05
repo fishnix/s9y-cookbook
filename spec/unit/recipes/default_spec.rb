@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 's9y::default' do
-  let (:chef_run) { ChefSpec::ChefRunner.new.converge('s9y::default') }
-  
+  let (:chef_run) { ChefSpec::Runner.new(platform: 'centos', version: '6.5').converge('s9y::default') }
+    
   it 'should include the apache2 recipe by default' do
     chef_run.should include_recipe 's9y::apache2'
   end

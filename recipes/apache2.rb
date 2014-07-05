@@ -45,6 +45,7 @@ s9y_sites.each do |s9y_site|
     group "root"
     mode 0644
     variables({
+      :name_vhost => node[:apache2][:namevhosts],
       :docroot => "#{node[:s9y][:base_dir]}/#{site_name}",
       :server_name => site_name,
       :server_aliases => site_aliases,
