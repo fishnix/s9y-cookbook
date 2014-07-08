@@ -8,7 +8,8 @@ DEPENDENCIES
     git: git://github.com/fishnix/memcached-cookbook.git
     revision: 70c7a6a001d60e50f7a6d4684c6121f0014d9a35
   mysql
-    path: ../../chef-repo/cookbooks/mysql
+    git: git://github.com/fishnix/mysql-cookbook.git
+    revision: 669e66d57191325e2e5e2fbf05ed0c8dd26b5af6
   php5
     git: git://github.com/fishnix/php5-cookbook.git
     revision: 5af283af9f82220f8c2921c6d1bf56253afe3a1b
