@@ -58,7 +58,7 @@ s9y_sites.each do |s9y_site|
   
   %w{ uploads templates_c plugins }.each do |dir|
     directory "#{node[:s9y][:base_dir]}/#{site_name}/#{dir}" do
-       mode 0775
+       mode "0775"
        owner "root"
        group node[:apache2][:user]
        action :create
@@ -66,7 +66,7 @@ s9y_sites.each do |s9y_site|
   end
   
   directory "#{node[:s9y][:base_dir]}/#{site_name}/templates" do
-     mode 0755
+     mode "0755"
      owner "root"
      group "root"
      action :create

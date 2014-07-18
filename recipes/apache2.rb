@@ -33,7 +33,7 @@ s9y_sites.each do |s9y_site|
   site_aliases = site_defs['site_aliases']
   
   if node[:s9y][:redirect_domain] and site_name.start_with?("www")
-    domain = site_name.sub /^www\./, ''
+    domain = site_name.sub(/^www\./, '')
   else
     domain = nil
   end
