@@ -22,8 +22,3 @@ include_recipe "s9y::plugins"
 include_recipe "s9y::templates"
 include_recipe "s9y::apache2"
 include_recipe "s9y::db"
-
-
-
-
-

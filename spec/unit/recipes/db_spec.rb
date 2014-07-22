@@ -25,6 +25,7 @@ describe 's9y::db' do
 					custom_plgn: { }
 				}
 			})
+      
 	end
 
   platforms.each do |platform, versions|
@@ -38,17 +39,9 @@ describe 's9y::db' do
 						node.set['s9y']['sites'] = ['first_site_test']
 			  	end.converge(described_recipe) 
 			  end
-			  
-			  it 'installs the ImageMagick package' do
-			    chef_run.should install_package('ImageMagick')
-			  end
-			  
-			  it 'creates s9y base directory owned by root/apache' do
-			    expect(chef_run).to create_directory('/var/www/vhost').with(
-			  		user: 'root',
-			  		group: 'apache'
-			    )
-			  end
+        
+        ## TODO: fill in tests for DB
+        
 			end
 		end
 	end
