@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: s9y
-# Recipe:: default
+# Recipe:: php
 #
 # Copyright 2011, E Camden Fisher
 #
@@ -16,10 +16,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe "s9y::prep"
-include_recipe "s9y::php"
-include_recipe "s9y::framework"
-include_recipe "s9y::plugins"
-include_recipe "s9y::templates"
-include_recipe "s9y::apache2"
-include_recipe "s9y::db"
+
+include_recipe "php"
+
+packages = value_for_platform_family(
+  ["rhel", "fedora", "suse"] => ["php-Smarty", "php-pecl-apc", "php-gd", "php-mysql", "php-xml", "php-pecl-memcache"],
+  "debian" => ["php-Smarty", "php5-apc", "php5-gd", "php5-mysql", "php5-xml", "php5-memcache"],
+  "default" => ["php-Smarty", "php5-apc", "php5-gd", "php5-mysql", "php5-xml", "php5-memcache"]
+)
+
+packages.each do |pkg|
+  package pkg do
+    action [:install,:upgrade]
+  end
+end

@@ -10,9 +10,7 @@ DEPENDENCIES
   mysql
     git: git://github.com/fishnix/mysql-cookbook.git
     revision: 669e66d57191325e2e5e2fbf05ed0c8dd26b5af6
-  php5
-    git: git://github.com/fishnix/php5-cookbook.git
-    revision: 5af283af9f82220f8c2921c6d1bf56253afe3a1b
+  php (~> 1.4.6)
   s9y
     path: .
     metadata: true
@@ -39,14 +37,21 @@ GRAPH
     windows (>= 0.0.0)
     yum (~> 3.0)
     yum-epel (>= 0.0.0)
+  iis (2.1.2)
+    windows (>= 1.2.6)
   memcached (0.0.1)
   mysql (1.3.0)
     build-essential (>= 0.0.0)
     openssl (>= 0.0.0)
   openssl (2.0.0)
     chef-sugar (>= 0.0.0)
-  php5 (0.0.3)
-    apache2 (>= 0.0.0)
+  php (1.4.6)
+    build-essential (>= 0.0.0)
+    iis (>= 0.0.0)
+    mysql (>= 0.0.0)
+    windows (>= 0.0.0)
+    xml (>= 0.0.0)
+    yum-epel (>= 0.0.0)
   postgresql (3.4.1)
     apt (>= 1.9.0)
     build-essential (>= 0.0.0)
@@ -55,15 +60,18 @@ GRAPH
     build-essential (>= 0.0.0)
     yum (~> 3.0)
     yum-epel (>= 0.0.0)
-  s9y (0.0.4)
+  s9y (0.0.6)
     apache2 (>= 0.0.0)
     database (>= 0.0.0)
     git (>= 0.0.0)
     mysql (>= 0.0.0)
-    php5 (>= 0.0.0)
+    php (>= 0.0.0)
   windows (1.31.0)
     chef_handler (>= 0.0.0)
   xfs (1.1.0)
+  xml (1.2.6)
+    build-essential (>= 0.0.0)
+    chef-sugar (>= 0.0.0)
   yum (3.2.2)
   yum-epel (0.3.6)
     yum (~> 3.0)
