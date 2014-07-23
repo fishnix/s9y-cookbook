@@ -26,3 +26,5 @@ default[:s9y][:redirect_admin] = true
 
 # redirect mydomain.com to www.mydomain.com?
 default[:s9y][:redirect_domain] = true	
+
+default[:s9y][:default_schema_url] = nil

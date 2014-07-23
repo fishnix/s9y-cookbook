@@ -40,6 +40,13 @@ describe 's9y::db' do
 			  	end.converge(described_recipe) 
 			  end
         
+        it 'creates the default schema file' do
+        	expect(chef_run).to create_cookbook_file_if_missing('/tmp/s9y_default_schema.sql').with(
+        		user: 'root',
+        		group: 'root'
+        	)
+        end
+        
         ## TODO: fill in tests for DB
         
 			end

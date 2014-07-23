@@ -39,11 +39,38 @@ s9y_sites.each do |s9y_site|
   deploy_branch  = site_defs['deploy_branch'] || node[:s9y][:deploy_branch]
    
   mysql_connection_info = {:host => db_host, :username => 'root', :password => node[:mysql][:server_root_password]}
+
+  if node[:s9y][:default_schema_url].nil?
+    cookbook_file "/tmp/s9y_default_schema.sql" do
+      source "s9y_default_schema.sql"
+      owner "root"
+      group "root"
+      mode "0600"
+      action :create_if_missing
+    end
+  else
+    file = s9y_file(node[:s9y][:default_schema_url])
+    remote_file "/tmp/#{file}" do
+      source node[:s9y][:default_schema_url]
+      owner 'root'
+      group 'root'
+      mode "0644"
+      action :create_if_missing
+    end
+  end
+  
+  # Load the schema on init
+  mysql_database 'load_schema' do
+    connection mysql_connection_info
+    sql { ::File.open('/tmp/s9y_default_schema.sql').read }
+    action :nothing
+  end
   
   # create the database
   mysql_database db_name do
     connection mysql_connection_info
     action :create
+    notifies :query, "mysql_database[load_schema]", :immediately
   end
     
   # create the user, grant all privelages on db
@@ -53,5 +80,4 @@ s9y_sites.each do |s9y_site|
     database_name db_name
     action [:create, :grant]
   end
-   
 end
