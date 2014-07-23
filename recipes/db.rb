@@ -62,6 +62,7 @@ s9y_sites.each do |s9y_site|
   # Load the schema on init
   mysql_database 'load_schema' do
     connection mysql_connection_info
+    database_name db_name
     sql { ::File.open('/tmp/s9y_default_schema.sql').read }
     action :nothing
   end
