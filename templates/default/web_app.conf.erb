@@ -1,0 +1,73 @@
+<VirtualHost *:<%= @params[:server_port] || node['apache']['listen_ports'].first %>>
+  ServerName <%= @params[:server_name] %>
+  <% if @params[:server_aliases] -%>
+    ServerAlias <%= @params[:server_aliases].join " " %>
+  <% end -%>
+  DocumentRoot <%= @params[:docroot] %>
+
+  <Directory <%= @params[:docroot] %>>
+    Options <%= [@params[:directory_options] || "FollowSymLinks" ].flatten.join " " %>
+    AllowOverride <%= [@params[:allow_override] || "None" ].flatten.join " " %>
+    <% if node['apache']['version'] == '2.4' -%>
+      Require all granted
+    <% else -%>
+      Order allow,deny
+      Allow from all
+    <% end -%>
+  </Directory>
+
+  <Directory />
+  Options FollowSymLinks
+  AllowOverride None
+  </Directory>
+
+  <Location /server-status>
+  SetHandler server-status
+
+  <% if node['apache']['version'] == '2.4' -%>
+    Require local
+  <% else -%>
+    Order Deny,Allow
+    Deny from all
+    Allow from 127.0.0.1
+  <% end -%>
+
+  </Location>
+
+  RewriteEngine On
+  <%- if node['apache']['version'] == '2.4' -%>
+    LogLevel info rewrite:trace1
+  <%- else -%>
+    LogLevel info
+    RewriteLog <%= node['apache']['log_dir'] %>/<%= @application_name %>-rewrite.log
+    RewriteLogLevel 0
+  <%- end -%>
+
+  ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-error.log
+  CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-access.log combined env=!forwarded
+  CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:server_name] %>-access.log proxy env=forwarded
+
+  <% if @params[:directory_index] -%>
+    DirectoryIndex <%= [@params[:directory_index]].flatten.join " " %>
+  <% end -%>
+
+  # Canonical host, <%= @params[:server_name] %>
+  RewriteCond %{HTTP_HOST}   !^<%= @params[:server_name] %> [NC]
+  RewriteCond %{HTTP_HOST}   !^$
+  RewriteRule ^/(.*)$        http://<%= @params[:server_name] %>/$1 [L,R=301]
+
+  RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+  RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+  RewriteRule ^.*$ /system/maintenance.html [L,R=503]
+
+  #RewriteRule /(serendipity_admin.*)$ https://<%= @params[:server_name] %>/$1 [R=302,L]
+
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+
+  ExpiresActive On
+  ExpiresDefault "access plus 5 minutes"
+  ExpiresByType image/jpeg "access plus 1 week"
+  ExpiresByType image/gif "access plus 1 week"
+  ExpiresByType image/png "access plus 1 week"
+  ExpiresByType text/css "access plus 1 week"
+</VirtualHost>

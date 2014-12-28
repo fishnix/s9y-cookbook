@@ -1,16 +1,14 @@
 #
-# Cookbook Name:: s9y
-# Recipe:: prep
+# Cookbook Name:: s9y-cookbook
+# Recipe:: _packages.rb
 #
-# preps the server for the framework
-#
-# Copyright 2011, E Camden Fisher
+# Copyright (C) 2014 E Camden Fisher
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#    http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,12 +20,4 @@
 package "ImageMagick" do
   package_name "ImageMagick"
   action :install
-end
-
-# Setup basedir
-directory node[:s9y][:base_dir] do
-  owner "root"
-  group node[:apache2][:user]
-  mode 0755
-  action :create
 end
