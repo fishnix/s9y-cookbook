@@ -1,21 +1,18 @@
 source 'https://rubygems.org'
 
-group :lint do
-  gem 'foodcritic'
-  gem 'rubocop'
-  gem 'rainbow'
-end
+gem 'berkshelf'
 
-group :unit do
-  gem 'berkshelf'
-  gem 'chefspec', '~> 3.1'
-end
+# Uncomment these lines if you want to live on the Edge:
+#
+# group :development do
+#   gem "berkshelf", github: "berkshelf/berkshelf"
+#   gem "vagrant", github: "mitchellh/vagrant", tag: "v1.6.3"
+# end
+#
+# group :plugins do
+#   gem "vagrant-berkshelf", github: "berkshelf/vagrant-berkshelf"
+#   gem "vagrant-omnibus", github: "schisamo/vagrant-omnibus"
+# end
 
-group :integration do
-	gem 'test-kitchen'
-	gem 'kitchen-vsphere'
-	gem 'kitchen-docker'
-	gem 'kitchen-vagrant'
-	gem 'serverspec'
-	gem 'busser-serverspec', '~> 0.2.6'
-end
+gem 'test-kitchen'
+gem 'kitchen-vagrant'

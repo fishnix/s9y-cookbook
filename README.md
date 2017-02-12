@@ -1,136 +1,113 @@
-# Description
+# s9y-cookbook
 
-Installs and configures the [S9Y blogging platform](http://www.s9y.org).
+An application cookbook for configuring S9Y sites
 
-### Notes:
-* I've only ever tested this with mysql
-* I have not switched to the community apache2, mysql or php5 cookbooks.  This will probably not break
-    this cookbook, but I haven't tested it yet.
+## Supported Platforms
 
+CentOS 6.x
 
-# Supported Platforms
+## Attributes
 
-CentOS 5.x/6.x
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>node['s9y']['basedir']</tt></td>
+    <td>String</td>
+    <td>Base directory for s9y installs</td>
+    <td><tt>/var/www/vhost</tt></td>
+  </tr>
+  <tr>
+    <td><tt>node['s9y']['owner']</tt></td>
+    <td>String</td>
+    <td>Owner for s9y dirs</td>
+    <td><tt>root</tt></td>
+  </tr>
+  <tr>
+    <td><tt>node['s9y']['group']</tt></td>
+    <td>String</td>
+    <td>Group for s9y dirs</td>
+    <td><tt>/var/www/vhost</tt></td>
+  </tr>
+  <tr>
+    <td><tt>node['s9y']['manage_database']</tt></td>
+    <td>String</td>
+    <td>Should we manage the database?</td>
+    <td><tt>false</tt></td>
+  </tr>
+  <tr>
+    <td><tt>node['s9y']['data_bag']</tt></td>
+    <td>String</td>
+    <td>What data bag should we look in for sites?</td>
+    <td><tt>s9y_sites</tt></td>
+  </tr>
+  <tr>
+    <td><tt>node['s9y']['data_bag_item']</tt></td>
+    <td>String</td>
+    <td>What data bag item should we use?</td>
+    <td><tt>www.example.com</tt></td>
+  </tr>
+</table>
 
-# Requirements
+## Usage
 
-## Cookbooks:
-* apache2
-* php5
-* git
-* mysql
-* database
- 
-## Databags
+You can use this cookbook for a _single_ site by:
+ - creating a data bag s9y_sites
+ - creating an encrypted data bag item for your site
+ - setting (at least) the `node['s9y']['data_bag_item']` attribute
+ - including the `s9y::default` recipe in your node's `run_list`
 
-For eache site enumerated in the `node[:s9y][:sites]` attribute, you require a databag with the site_name set to that name.
+Alternatively you can use the provides `s9y_site` LWRP...
 
-#### for example...
-    node[:s9y][:sites] = ["test.example.com"]
+## LWRP
 
-#### requires: data_bags/s9y_sites/test.example.com.json:
-    {
-      "id": "test_example_com",
-      "site_name": "test.example.com",
-      "version": "1.7",
-      "dbName": "test_example_com",
-      "dbPrefix": "serendipity_",
-      "dbHost": "127.0.0.1",
-      "dbUser": "testdbUser",
-      "dbPass": "changeme",
-      "dbType": "mysql",
-      "dbPersistent": "false",
-      "dbCharset": "utf8",
-      "site_aliases": [ ],
-      "deploy_branch": "",
-      "git_repo": "",
-      "custom_tmpl": { "awesometemplate":"git://github.com/user/awesometemplate.git" },
-      "custom_plgn": { 
-          "awesomeplugin":"git://github.com/user/awesomeplugin.git",
-          "lameplugin":"git://github.com/user/lameplugin.git"
-        }
-    }
+### s9y_site
 
-*Note*: if you don't have a data bag in place, it _should_ function with defaults for testing.
+```ruby
+actions :create, :update
+default_action :create
 
-# Attributes
-
-#### default attributes that can be overridden by the data bag
-    default[:s9y][:git_repo] = 'git://github.com/s9y/Serendipity.git'
-    default[:s9y][:deploy_branch]	= "1.7"
-    default[:s9y][:base_dir]	    = "/var/www/vhost"
-    default[:s9y][:version]		    = "1.7"
-    default[:s9y][:dbName]		    = "serendipity"
-    default[:s9y][:dbPrefix]	    = "serendipity_"
-    default[:s9y][:dbHost]		    = "localhost"
-    default[:s9y][:dbUser]		    = "serendipity"
-    default[:s9y][:dbPass]		    = "serendipity"
-    default[:s9y][:dbType]		    = "mysql"
-    default[:s9y][:dbPersistent]	= "false"
-    default[:s9y][:dbCharset]	    = "utf8"
-
-#### set default empty site list
-    default[:s9y][:sites]         = [ ]
-
-#### don't bootstrap DB by default
-    default[:s9y][:bootstrap_db] = false
-
-#### redirects admin to https
-    default[:s9y][:redirect_admin] = true
-
-#### redirects mydomain.com to www.mydomain.com
-    default[:s9y][:redirect_domain] = true
-
-
-# Usage
+attribute :name,              :kind_of => String, :name_attribute => true
+attribute :aliases,           :kind_of => Array, :default => []
+attribute :basedir,           :kind_of => String, :default => '/var/www/vhost'
+attribute :version,           :kind_of => String, :default => '1.7.8'
+attribute :git_repo,          :kind_of => String, :default => 'git://github.com/s9y/Serendipity.git'
+attribute :git_branch,        :kind_of => String, :default => '1.7.8'
+attribute :owner,             :kind_of => String, :default => 'root'
+attribute :group,             :kind_of => String, :default => 'apache'
+attribute :custom_templates,  :kind_of => Array, :default => []
+attribute :custom_plugins,    :kind_of => Array, :default => []
+attribute :database,          :kind_of => Hash, :default => { 'type' => 'mysql',
+                                                              'name' => 's9y',
+                                                              'prefix' => 'serendipity_',
+                                                              'user' => 's9y',
+                                                              'password' => 's9y',
+                                                              'host' => 'localhost',
+                                                              'port' => '3306',
+                                                              'persistent' => 'false',
+                                                              'charset' => 'utf8'}
+attribute :manage_database,   :kind_of => [TrueClass, FalseClass], :default => false
+attribute :cookbook,          :kind_of => String, :default => 's9y'
+```
 
 ## Recipes
 
-#### s9y::default
+### s9y::default
 
-Include `s9y` in your node's `run_list` to get:
+Include `s9y` in your node's `run_list`:
 
-* `s9y::prep`
-* `s9y::framework`
-* `s9y::plugins`
-* `s9y::templates`
-* `s9y::apache2`
-* `s9y::db`
- 
-#### s9y::prep
+```json
+{
+  "run_list": [
+    "recipe[s9y::default]"
+  ]
+}
+```
 
-Installs package dependencies and preps the filesystem for s9y.
-
-#### s9y::framework
-
-Pulls the framework from git, creates required subdirs and builds the local config file.
-
-#### s9y::plugins
-
-Installs custom plugins from git locations.  *Note:* This does _not_ enable them.
-
-#### s9y::templates
-
-Installs custom templates from git locations.
-
-#### s9y::apache2
-
-Configures apache VirtualHosts for each site.
-
-####s9y::db
-
-Ensures the database and db user are created and the password is known by chef.
-
-# Contributing
-
-1. Fork the repository on Github
-2. Create a named feature branch (i.e. `add-new-recipe`)
-3. Write you change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request
-
-# License and Authors
+## License and Authors
 
 Author:: E Camden Fisher (<fish@fishnix.net>)
-

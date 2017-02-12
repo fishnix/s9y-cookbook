@@ -1,14 +1,14 @@
 #
-# Cookbook Name:: s9y
-# Recipe:: php
+# Cookbook Name:: s9y-cookbook
+# Recipe:: _php
 #
-# Copyright 2011, E Camden Fisher
+# Copyright (C) 2014 E Camden Fisher
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+#    http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,9 +20,9 @@
 include_recipe "php"
 
 packages = value_for_platform_family(
-  ["rhel", "fedora", "suse"] => ["php-Smarty", "php-pecl-apc", "php-gd", "php-mysql", "php-xml", "php-pecl-memcache"],
-  "debian" => ["php-Smarty", "php5-apc", "php5-gd", "php5-mysql", "php5-xml", "php5-memcache"],
-  "default" => ["php-Smarty", "php5-apc", "php5-gd", "php5-mysql", "php5-xml", "php5-memcache"]
+    ["rhel", "fedora", "suse"] => ["php-Smarty", "php-pecl-apc", "php-gd", "php-mysql", "php-xml", "php-pecl-memcache", "php-mbstring"],
+    "debian" => ["php-Smarty", "php5-apc", "php5-gd", "php5-mysql", "php5-xml", "php5-memcache", "php5-mbstring"],
+    "default" => ["php-Smarty", "php5-apc", "php5-gd", "php5-mysql", "php5-xml", "php5-memcache", "php5-mbstring"]
 )
 
 packages.each do |pkg|

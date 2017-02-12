@@ -19,4 +19,8 @@
 	// End of Serendipity configuration file
 	// You can place your own special variables after here:
 
+	if (getenv('HTTP_X_FORWARDED_FOR') != '') {
+		$_SERVER['REMOTE_ADDR'] = getenv('HTTP_X_FORWARDED_FOR');
+	}
+
 ?>

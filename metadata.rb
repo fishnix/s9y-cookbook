@@ -1,12 +1,16 @@
-name             "s9y"
-maintainer       "E Camden Fisher"
-maintainer_email "fish@fishnix.net"
-license          "Apache 2.0"
-description      "Installs/Configures s9y"
-long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.0.6"
-depends "apache2"
-depends "php"
-depends "git"
-depends "mysql"
-depends "database"
+name             's9y'
+maintainer       'E Camden Fisher'
+maintainer_email 'camden@northpage.com'
+license          'Apache 2.0'
+description      'Installs/Configures s9y'
+long_description 'Installs/Configures s9y blogging platform'
+version          '1.0.0'
+
+depends 'yum', '~> 3.4.1'
+depends 'yum-epel', '~> 0.5.2'
+depends 'yum-mysql-community', '~> 0.1.10'
+depends 'apache2', '~> 3.0.0'
+depends 'php', '~> 1.5.0'
+depends 'mysql', '~> 6.0.0'
+depends 'git', '~> 4.1.0'
+

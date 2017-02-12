@@ -1,38 +1,50 @@
 ---
-driver_plugin: vagrant
-driver_config:
-  require_chef_omnibus: true
+driver:
+  name: vagrant
+  config:
+    require_chef_omnibus: true
+  customize:
+    memory: 2048
+    cpus: 2
+  network:
+    - ["forwarded_port", { guest: 80, host: 8080 }]
 
 provisioner:
   name: chef_zero
+  encrypted_data_bag_secret_key_path: test/integration/tk_encrypted_data_bag_secret
+  data_bags_path: test/integration/data_bags
+  environments_path: test/environments
+  client_rb:
+    environment: kitchen
+
 
 platforms:
-  - name: centos-6.5
-    driver:
-      network:
-        - ["forwarded_port", { guest: 80, host: 8080 }]
-    driver_config: 
-      image: "centos-6.5"
-    run_list:
-        - recipe[yum]
-        - recipe[yum-epel]
+  - name: centos-6.6
 
 suites:
   - name: default
     run_list:
-      - recipe[git]
-      - recipe[apache2]
-      - recipe[memcached]
-      - recipe[php]
-      - recipe[mysql::server]
-      - recipe[mysql::client]
-      - recipe[mysql::ruby]
-      - recipe[database]
-      - recipe[s9y]
+      - recipe[yum]
+      - recipe[yum-epel]
+      - recipe[git::default]
+      - recipe[apache2::default]
+      - recipe[s9y::default]
     attributes:
+      apache:
+        default_modules:
+          - mod_alias
+          - mod_authz_host
+          - mod_dir
+          - mod_mime
+          - mod_mime_magic
+          - mod_php5
+          - mod_log_config
+          - mod_logio
+          - mod_deflate
+          - mod_expires
+          - mod_rewrite
+          - mod_setenvif
+          - mod_status
       s9y:
-        sites:
-          - "test_kitchen_ci"
-        base_dir: "/var/www/vhost"
-        redirect_admin: false
-
+        data_bag_item: "test_kitchen_ci"
+        manage_database: true

@@ -1,0 +1,51 @@
+{
+  "id": "test_kitchen_ci",
+  "site_name": {
+    "encrypted_data": "Hlk1Y8TwKSsBE7v4EvyId3DAAAHYjdRrAuv0qEB3elG53L7yYIX3oxqlu5ca\ni3kO\n",
+    "iv": "zRw8OD4sDKOup6eY3snr5w==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "site_aliases": {
+    "encrypted_data": "xDNt8E5qCcJaQerLw0siZZFXLNTJbOEMxV2bT+kRJi4=\n",
+    "iv": "E/8zdkhpfSlAC8bgDkxjiQ==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "version": {
+    "encrypted_data": "MeYSdAROk5YruY9SRMAtSMeAaZrCfvD1DqsFXYDHJVs=\n",
+    "iv": "bNApPNDZxsTzBwJg7VQwNA==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "git_repo": {
+    "encrypted_data": "eoESeL4tBSlzo7GOy/5eGo95diGwkxWI3T+RA6ptLkKdskBEVc8uri0tcCbX\noY7D4sC1yujfhY5ywhEEyFZdpQ==\n",
+    "iv": "S4mrAmbqoytS7VbHvRf3fQ==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "git_branch": {
+    "encrypted_data": "TqqT0Wk8TMGx590abaa4Q5UwlO3qYVp7jrV83qI2JIE=\n",
+    "iv": "sV8kiP4ACkPZrKoSko4E7A==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "custom_templates": {
+    "encrypted_data": "RxC1H8qsWp1lHkSalK8+jqlu3oUQX09u4KJRPuQeYqw=\n",
+    "iv": "Tw/vf6c/wKtfwU7KCuEH6g==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "custom_plugins": {
+    "encrypted_data": "XRKEKxMNv9pmb75vzvviIZWnc+fyomdtdp5HmhOzVbM=\n",
+    "iv": "WAACgihxeQv45BlM60wSoA==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "database": {
+    "encrypted_data": "pY4xvMVCsNwa7a6Iy+2UGPGbx3/vTilZCdpqCFhjLTADsMcrcQHp7RIo2Gt0\nCotVeAZJhGCzIP1afGKOuex/8pnjhQuSN+XiHivla9Weh1Q38tmBE2CXD9WB\n7kab3nCyvLImaDqI0NVKAnyZuNOtBrN2o4Jmmb4QjMaK+w0JYv4wI25Z8nYc\ngex5RIhDywlp08FjNPDvvHj8AqI1zqnFZiKHtV9jylJnP26iaPt/xqWhPaeE\niuZ5vgcrEDloA7TS\n",
+    "iv": "grsJgVYeUqhr/nf6OYjdDQ==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  }
+}
